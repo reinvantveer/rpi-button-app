@@ -2,44 +2,27 @@
 
 const bunyan = require('bunyan');
 const log = bunyan.createLogger({ name: 'RPI button app' });
-const gpio = require('rpi-gpio');
+const wpi = require('wiring-pi');
 const express = require('express');
 const app = express();
 
-//gpio.on('change', (channel, value) => {
-//	log.info('Channel ' + channel + ' value is now ' + value);
-//});
+wpi.setup('sys');
 
-gpio.setup(7, gpio.DIR_OUT, err => {
-	if (err) {
-		gpio.destroy();
-		throw err;
-	}
-
-	setInterval(
-		() => {
-	        gpio.read(7, (err, value) => {
-				if (err) {
-					gpio.destroy();
-					throw err;
-				}
-				log.info(`Pin 7: ${value}`);
-			});
-	    }, 60000
-	);
+wpi.wiringPiISR(4, wpi.INT_EDGE_BOTH, () => {
+	const value = wpi.digitalRead(4);
+  log.info(`Pin 4 changed to ${value}`);
 });
-	
+
 app.get('/', (req, res) => {
-	gpio.read(7, (err, value) => {
-		gpio.write(7, !value, err => {
-			if (err) throw err;
-		});
-		if (err) throw err;
-		res.send(`Pin 7: ${value}`);	// The current state of the pin 
-	});
+	const value = wpi.digitalRead(4);
+	res.send(`Pin 4: ${value}`);
 });
-
 
 app.listen(3000);
-
 log.info('App listening at port 3000');
+
+process.on('SIGINT', function () {
+	console.log(' Ctrl-C detected, exiting...');
+	wpi.wiringPiISRCancel(4);
+	process.exit(2);
+});

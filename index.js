@@ -8,8 +8,9 @@ const app = express();
 
 wpi.setup('sys');
 
-wpi.wiringPiISR(4, wpi.INT_EDGE_BOTH, delta => {
-  log.info(`Pin 4 changed to ${delta}`);
+wpi.wiringPiISR(4, wpi.INT_EDGE_BOTH, () => {
+	const value = wpi.digitalRead(4);
+  log.info(`Pin 4 changed to ${value}`);
 });
 
 app.get('/', (req, res) => {

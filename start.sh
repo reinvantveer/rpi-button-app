@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -e
-# gpio export 7 out
+gpio export 4 in
 nodemon index.js
-# gpio unexport 7
+gpio unexport 4

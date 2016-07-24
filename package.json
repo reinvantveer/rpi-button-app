@@ -1,0 +1,34 @@
+{
+  "name": "rpi-button-app",
+  "version": "1.0.0",
+  "description": "App for diverse interfaces to a raspberry pi attached button press",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://reinvantveer@github.com/reinvantveer/rpi-button-app.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "button",
+    "api",
+    "app"
+  ],
+  "author": "Rein van 't Veer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reinvantveer/rpi-button-app/issues"
+  },
+  "homepage": "https://github.com/reinvantveer/rpi-button-app#readme",
+  "dependencies": {
+    "bunyan": "^1.8.1",
+    "express": "^4.14.0",
+    "pi-gpio": "0.0.8",
+    "rpi-gpio": "^0.7.0",
+    "sendmail": "^0.2.2",
+    "wiring-pi": "^2.1.1"
+  }
+}
